@@ -1,0 +1,74 @@
+*kensaku_search.jax*			kensaku.vim を / や ? で自然に利用する
+
+Author:  Alisue <lambdalisue@gmail.com>
+License: MIT License (See LICENSE)
+
+
+=============================================================================
+CONTENTS					*kensaku-search--contents*
+
+INTRODUCTION			|kensaku-search-introduction|
+REQUIREMENTS			|kensaku-search-requirements|
+INTERFACE			|kensaku-search-interface|
+  MAPPINGS			  |kensaku-search-mappings|
+
+
+=============================================================================
+INTRODUCTION					*kensaku-search-introduction*
+
+*kensaku-search.vim* は lambdalisue/kensaku.vim を |/| や |?| で自然に利用する
+ためのインテグレーションプラグインです。/ や ? で検索する際に、ローマ字を含む
+検索ワードが指定されている場合は自動的に正規表現に置き換えることで、自然にロー
+マ字で日本語検索が可能です。
+
+なお、オリジナルは rhysd/migemo-search.vim で、このプラグインは同等の機能を
+lambdalisue/kensaku.vim を利用して提供しています。
+
+lambdalisue/kensaku.vim		https://github.com/lambdalisue/kensaku.vim
+rhysd/migemo-search.vim		https://github.com/rhysd/migemo-search.vim
+
+
+=============================================================================
+REQUIREMENTS					*kensaku-search-requirements*
+
+lambdalisue/kensaku.vim~
+	CMigemo 非依存で Migemo を用いたローマ字による日本語検索機能を提供する
+	ためのプラグイン
+	https://github.com/lambdalisue/kensaku.vim
+
+
+=============================================================================
+USAGE						*kensaku-search-usage*
+
+kensaku-search.vim はデフォルトマッピングを提供していないため、ユーザーが以下
+のように |<CR>| に対して |<Plug>(kensaku-search-replace)| を割り当てる必要があ
+ります。
+>
+	cnoremap <CR> <Plug>(kensaku-search-replace)<CR>
+<
+その後 / や ? に対してローマ字を指定すると <CR> を押した時点で対応する正規表現
+に置き換わります。
+
+
+=============================================================================
+INTERFACE					*kensaku-search-interface*
+
+-----------------------------------------------------------------------------
+MAPPINGS					*kensaku-search-mappings*
+
+*<Plug>(kensaku-search-replace)*
+	検索クエリ (|cmdline()| が返す文字列) にローマ字が含まれる場合に検索ク
+	エリを対応する正規表現に置き換える|:map-<expr>| のマッピングです。
+	以下の様に <CR> にマッピングすることで検索クエリにローマ字が存在する
+	場合に自動で正規表現に置き換えます。
+>
+	cnoremap <CR> <Plug>(kensaku-search-replace)<CR>
+<
+	なお <CR> の上書きになるため |cnoremap| を使って再帰を避ける必要がある
+	ことに注意してください。もし間違えて |cmap| などを利用してしまいコマン
+	ド入力ができなくなった場合は <CR> の代わりに <C-j> を利用して決定して
+	ください。
+
+
+=============================================================================
+vim:tw=78:fo=tcq2mM:ts=8:ft=help:norl
